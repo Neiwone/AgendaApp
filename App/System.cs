@@ -32,18 +32,22 @@ namespace App
                         {
                             Console.Clear();
 
+                            // Temporary variables
+                            string cpf;
+                            Pacient p;
+
                             switch (Menu_Screens.ShowRegisterMenu())
                             {
+                                
                                 case Menu.RegisterMENUOptions.ADD:
-                                    var p = CreatePacient() ?? throw new Exception("Cannot create pacient");
+                                    p = CreatePacient() ?? throw new Exception("Cannot create pacient");
                                     AddPacient(p);
                                     PacientForm.SuccessfulCreation();
                                     break;
                                 case Menu.RegisterMENUOptions.REMOVE:
-                                    var cpf = Menu_Screens.AskCPF();
-                                    RemovePacient(
-                                        FindPacientByCPF(cpf)
-                                        );
+                                    cpf = Menu_Screens.AskCPF();
+                                    p = FindPacientByCPF(cpf) ?? throw new Exception("Cannot find pacient");
+                                    RemovePacient(p);
                                     break;
                                 case Menu.RegisterMENUOptions.LISTBYCPF:
                                     ListarPacientes(BYCPF: true);
@@ -206,7 +210,7 @@ namespace App
             var name = PacientForm.AskForName();
             var birthDate = PacientForm.AskForBirthDate();
 
-            // Double validation and there is nothing I can do to change :D
+            // Double validation and there is nothing I can do to change that :D
             Result<Pacient, CreatePacientError> result = Pacient.Create(cpf, name, birthDate);
 
             if (result.IsSuccess)
@@ -232,7 +236,7 @@ namespace App
                 Console.WriteLine("Paciente não encontrado!");
                 Thread.Sleep(1000);
 
-                return pacient;
+                return null;
             }
 
 
