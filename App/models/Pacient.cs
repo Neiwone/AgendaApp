@@ -1,14 +1,17 @@
 ﻿using App.utils;
 using App.validate;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace App.models
 {
     public class Pacient
     {
         private static readonly CreatePacientValidator validator = new();
+        [Required]
         public string Name { get; private set; }
+        [Key]
         public string CPF { get; private set; }
+        [Required]
         public DateOnly BirthDate { get; private set; }
 
         private Pacient(string CPF, string Name, DateOnly BirthDate)

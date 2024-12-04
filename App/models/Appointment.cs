@@ -1,5 +1,6 @@
 ﻿using App.validate;
 using Microsoft.VisualBasic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace App.models
@@ -7,9 +8,17 @@ namespace App.models
     public class Appointment
     {
         private static readonly AgendaValidator validator = new();
+
+        [Key]
+        public int ID { get; private set; }
+
+        [Required]
         public string CPF { get; private set; }
+        [Required]
         public DateOnly Date { get; private set; }
+        [Required]
         public TimeOnly StartTime { get; private set; }
+        [Required]
         public TimeOnly EndTime { get; private set; }
 
         public Appointment(string cpf, DateOnly date, TimeOnly startTime, TimeOnly endTime)
